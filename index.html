@@ -1,0 +1,129 @@
+
+ <!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Hotel Reservation Form</title>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="index.css" rel="stylesheet" type="text/css">
+
+    <script>
+        function calculateTotalCost() {
+            var roomType = document.getElementById("room_type").value;
+            var amenities = document.getElementById("amenities").value;
+            var totalNoOfDays = document.getElementById("total_no_of_days").value;
+            var totalNoOfPersons = document.getElementById("total_no_of_persons").value;
+            var advanceAmount = document.getElementById("advance_amount").value;
+
+            var roomRate = 0;
+            var amenitiesCost = 0;
+
+            if (roomType === "delux") {
+                roomRate = 2500;
+            } else if (roomType === "suite") {
+                roomRate = 4000;
+            }
+
+            if (amenities.includes("ac")) {
+                amenitiesCost += 1000;
+            }
+            if (amenities.includes("locker")) {
+                amenitiesCost += 300;
+            }
+
+            var totalRoomCost = roomRate * totalNoOfDays;
+            var totalAmenitiesCost = amenitiesCost * totalNoOfDays;
+            var totalCost = totalRoomCost + totalAmenitiesCost;
+            var balance = totalCost - advanceAmount;
+
+            document.getElementById("total_room_cost").innerHTML = totalRoomCost;
+            document.getElementById("total_amenities_cost").innerHTML = totalAmenitiesCost;
+            document.getElementById("total_cost").innerHTML = totalCost;
+            document.getElementById("balance").innerHTML = balance;
+        }
+    </script>
+</head>
+<body>
+   
+
+    <div class="hotel_reserve_box">
+        <h3>Hotel Reservation Form</h3><br>
+        <form>
+            <!-- Customer Information -->
+            <div class="form-group">
+                <label>Customer Name:</label>
+                <input type="text" class="form-control" id="customer_name" required>
+            </div>
+            <div class="form-group">
+                <label>Check-in Date:</label>
+                <input type="date" class="form-control" id="check_in_date" required>
+            </div>
+            <div class="form-group">
+                <label>Total No of Days:</label>
+                <input type="number" class="form-control" id="total_no_of_days" onchange="calculateTotalCost()" required>
+            </div>
+            <div class="form-group">
+                <label>Total No of Persons:</label>
+                <input type="number" class="form-control" id="total_no_of_persons" onchange="calculateTotalCost()" required>
+            </div>
+
+            <!-- Room Information -->
+            <div class="form-group">
+                <label>Room Type:</label>
+                <select class="form-control" id="room_type" onchange="calculateTotalCost()">
+                    <option value="delux">Delux Room</option>
+                    <option value="suite">Suite Room</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Amenities:</label>
+                <select class="form-control" id="amenities" multiple onchange="calculateTotalCost()">
+                    <option value="ac">AC</option>
+                    <option value="locker">Locker</option>
+                </select>
+            </div>
+
+            <!-- Advance Payment -->
+            <div class="form-group">
+                <label>Advance Amount ($):</label>
+                <input type="number" class="form-control" id="advance_amount" onchange="calculateTotalCost()" required>
+            </div>
+
+            <!-- Balance Amount -->
+            <div class="form-group">
+                <label>Balance ($):</label>
+                <span id="balance" style="background-color: #7527b0;color: #fff;padding: 6px 70px;font-weight: 600;font-size: 18px; margin-left: 10px;border-radius: 5px;"></span>
+            </div>
+
+            <!-- Total Cost Calculation -->
+            <div class="form-group">
+                <label>Total Room Cost ($):</label>
+                <span id="total_room_cost"></span>
+            </div>
+            <div class="form-group">
+                <label>Total Amenities Cost ($):</label>
+                <span id="total_amenities_cost"></span>
+            </div>
+            <div class="form-group">
+                <label>Total Cost ($):</label>
+                <span id="total_cost"></span>
+            </div>
+
+            <!-- Additional Charges -->
+            <div class="form-group">
+                <label>Upto 2 People:</label>
+                <span>No Change in Cost</span>
+            </div>
+            <div class="form-group">
+                <label>Per Day Cost for Extra Person ($):</label>
+                <span>1000</span>
+            </div>
+            
+            <div class="div">
+                <button style=" color: rgb(9, 9, 9); border:3px solid black ; border-radius: 3px;">submit</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
